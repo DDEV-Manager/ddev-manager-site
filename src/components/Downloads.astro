@@ -1,0 +1,209 @@
+---
+import { formatBytes } from "../lib/github";
+import type { PlatformDownloads } from "../lib/github";
+
+interface Props {
+  version?: string;
+  downloads?: PlatformDownloads;
+  changelog?: string;
+  releaseUrl?: string;
+}
+
+const { version, downloads, changelog, releaseUrl } = Astro.props;
+
+const platforms = [
+  {
+    id: "macos",
+    name: "macOS",
+    icon: "apple",
+    description: "Universal binary for Intel and Apple Silicon",
+    download: downloads?.macOS,
+    note: "First launch: Right-click → Open to bypass Gatekeeper",
+  },
+  {
+    id: "windows",
+    name: "Windows",
+    icon: "windows",
+    description: "Native Windows installer",
+    download: downloads?.windowsX64,
+    altDownload: downloads?.windowsArm,
+    altLabel: "ARM64",
+  },
+  {
+    id: "linux",
+    name: "Linux",
+    icon: "linux",
+    description: "Available as .deb and AppImage",
+    download: downloads?.linuxX64Deb,
+    altDownload: downloads?.linuxX64AppImage,
+    altLabel: "AppImage",
+    note: "For graphics issues: GDK_BACKEND=x11",
+  },
+];
+---
+
+<section id="downloads" class="bg-gray-100 px-4 py-20 dark:bg-gray-900/50">
+  <div class="mx-auto max-w-6xl">
+    <div class="text-center">
+      <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl dark:text-white">
+        Download DDEV Manager
+      </h2>
+      {version && (
+        <p class="mt-2 text-lg text-gray-600 dark:text-gray-400">
+          Latest version: <span class="font-semibold text-primary-600 dark:text-primary-400">{version}</span>
+        </p>
+      )}
+    </div>
+
+    <!-- Platform cards -->
+    <div class="mt-12 grid gap-6 md:grid-cols-3">
+      {platforms.map((platform) => (
+        <div
+          id={`download-${platform.id}`}
+          class="download-card flex flex-col rounded-2xl border border-gray-200 bg-white p-6 transition-all dark:border-gray-700 dark:bg-gray-800"
+        >
+          <!-- Platform icon -->
+          <div class="flex items-center gap-3">
+            <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-gray-100 dark:bg-gray-700">
+              {platform.icon === "apple" && (
+                <svg class="h-7 w-7 text-gray-700 dark:text-gray-300" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                </svg>
+              )}
+              {platform.icon === "windows" && (
+                <svg class="h-6 w-6 text-gray-700 dark:text-gray-300" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/>
+                </svg>
+              )}
+              {platform.icon === "linux" && (
+                <svg class="h-6 w-6 text-gray-700 dark:text-gray-300" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12.504 0c-.155 0-.311.002-.465.007C7.32.108 4.89 3.37 4.89 7.057c0 2.513.614 3.796 1.543 5.544.614 1.156 1.17 2.25 1.065 3.666-.12 1.617-.934 3.256-1.815 4.506-.404.573-.188 1.15.09 1.378.377.31.947.295 1.34-.07.588-.548 1.183-1.217 1.713-1.843.53-.625 1.084-1.3 1.633-1.86.548-.56 1.13-1.02 1.8-1.236.67-.217 1.437-.194 2.368.254 1.09.523 1.782 1.348 2.456 2.144.673.795 1.34 1.59 2.253 2.15.913.56 2.08.848 3.476.355.797-.282 1.372-.948 1.372-1.775 0-.6-.293-1.224-.67-1.815-.378-.592-.83-1.163-1.15-1.786-.32-.624-.503-1.262-.503-2.025 0-1.725.686-2.948 1.488-4.04.802-1.093 1.716-2.095 2.216-3.39.5-1.296.586-2.857-.166-4.48C20.65 1.61 18.08.003 15.053 0c-.854-.003-1.72.067-2.55.2z"/>
+                </svg>
+              )}
+            </div>
+            <div>
+              <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{platform.name}</h3>
+              <p class="text-sm text-gray-500 dark:text-gray-400">{platform.description}</p>
+            </div>
+          </div>
+
+          <!-- Download buttons -->
+          <div class="mt-6 flex flex-col gap-2">
+            {platform.download ? (
+              <a
+                href={platform.download.url}
+                class="flex items-center justify-center gap-2 rounded-lg bg-primary-500 px-4 py-2.5 font-medium text-white transition-colors hover:bg-primary-600"
+              >
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+                Download {platform.download.label}
+                <span class="text-sm opacity-75">({formatBytes(platform.download.size)})</span>
+              </a>
+            ) : (
+              <span class="text-center text-sm text-gray-500 dark:text-gray-400">
+                No release available
+              </span>
+            )}
+            {platform.altDownload && (
+              <a
+                href={platform.altDownload.url}
+                class="flex items-center justify-center gap-2 rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
+              >
+                {platform.altLabel} ({formatBytes(platform.altDownload.size)})
+              </a>
+            )}
+          </div>
+
+          <!-- Installation note -->
+          {platform.note && (
+            <p class="mt-4 text-xs text-gray-500 dark:text-gray-500">
+              {platform.note}
+            </p>
+          )}
+        </div>
+      ))}
+    </div>
+
+    <!-- Installation notes -->
+    <div class="mt-12 rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
+      <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Installation Notes</h3>
+      <div class="mt-4 grid gap-6 md:grid-cols-2">
+        <div>
+          <h4 class="font-medium text-gray-900 dark:text-white">macOS Gatekeeper</h4>
+          <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+            The app is not signed with an Apple Developer certificate. On first launch:
+          </p>
+          <ol class="mt-2 list-inside list-decimal text-sm text-gray-600 dark:text-gray-400">
+            <li>Right-click the app and select "Open"</li>
+            <li>Click "Open" in the dialog</li>
+          </ol>
+          <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Or via terminal:</p>
+          <code class="mt-1 block rounded bg-gray-100 px-2 py-1 text-xs dark:bg-gray-900">
+            xattr -d com.apple.quarantine /Applications/DDEV\ Manager.app
+          </code>
+        </div>
+        <div>
+          <h4 class="font-medium text-gray-900 dark:text-white">Linux Graphics Issues</h4>
+          <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+            If you experience graphics issues with the AppImage, try forcing X11:
+          </p>
+          <code class="mt-2 block rounded bg-gray-100 px-2 py-1 text-xs dark:bg-gray-900">
+            GDK_BACKEND=x11 ./DDEV.Manager_*.AppImage
+          </code>
+        </div>
+      </div>
+    </div>
+
+    <!-- Changelog -->
+    {changelog && (
+      <div class="mt-8">
+        <details class="group rounded-xl border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
+          <summary class="flex cursor-pointer items-center justify-between p-6">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+              What's New in {version}
+            </h3>
+            <svg class="h-5 w-5 text-gray-500 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </summary>
+          <div class="border-t border-gray-200 p-6 dark:border-gray-700">
+            <div class="prose prose-sm prose-gray dark:prose-invert max-w-none" set:html={changelog} />
+          </div>
+        </details>
+        {releaseUrl && (
+          <p class="mt-4 text-center text-sm text-gray-500 dark:text-gray-400">
+            <a
+              href={releaseUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-primary-600 hover:underline dark:text-primary-400"
+            >
+              View full release notes on GitHub
+            </a>
+          </p>
+        )}
+      </div>
+    )}
+  </div>
+</section>
+
+<script>
+  // Highlight the download card for the current platform
+  const ua = navigator.userAgent;
+  let platformId = '';
+  if (ua.includes('Mac')) {
+    platformId = 'macos';
+  } else if (ua.includes('Win')) {
+    platformId = 'windows';
+  } else if (ua.includes('Linux')) {
+    platformId = 'linux';
+  }
+
+  if (platformId) {
+    const card = document.getElementById(`download-${platformId}`);
+    if (card) {
+      card.classList.add('ring-2', 'ring-primary-500', 'border-primary-500');
+    }
+  }
+</script>

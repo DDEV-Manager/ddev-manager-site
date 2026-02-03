@@ -1,0 +1,93 @@
+---
+const features = [
+  {
+    title: "Cross-Platform",
+    description: "Native support for macOS, Windows, and Linux. Runs beautifully on all platforms.",
+    icon: "desktop",
+  },
+  {
+    title: "One-Click Control",
+    description: "Start, stop, and restart your DDEV projects instantly with a single click.",
+    icon: "play",
+  },
+  {
+    title: "Database Tools",
+    description: "Create snapshots, import and export databases with an intuitive interface.",
+    icon: "database",
+  },
+  {
+    title: "Add-on Management",
+    description: "Browse and install add-ons from the official DDEV registry.",
+    icon: "puzzle",
+  },
+  {
+    title: "CMS Installers",
+    description: "Quick-start Drupal, Laravel, WordPress, Shopware, and more with built-in installers.",
+    icon: "rocket",
+  },
+  {
+    title: "Real-time Terminal",
+    description: "See command output as it happens with the integrated terminal view.",
+    icon: "terminal",
+  },
+];
+---
+
+<section id="features" class="px-4 py-20">
+  <div class="mx-auto max-w-6xl">
+    <div class="text-center">
+      <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl dark:text-white">
+        Everything you need to manage DDEV
+      </h2>
+      <p class="mt-4 text-lg text-gray-600 dark:text-gray-400">
+        A powerful GUI that makes local development a breeze
+      </p>
+    </div>
+
+    <div class="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      {features.map((feature) => (
+        <div class="group relative rounded-2xl border border-gray-200 bg-white p-6 transition-all hover:border-primary-300 hover:shadow-lg dark:border-gray-800 dark:bg-gray-900 dark:hover:border-primary-700">
+          <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-primary-100 text-primary-600 dark:bg-primary-900/50 dark:text-primary-400">
+            {feature.icon === "desktop" && (
+              <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+            )}
+            {feature.icon === "play" && (
+              <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            )}
+            {feature.icon === "database" && (
+              <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
+              </svg>
+            )}
+            {feature.icon === "puzzle" && (
+              <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" />
+              </svg>
+            )}
+            {feature.icon === "rocket" && (
+              <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+            )}
+            {feature.icon === "terminal" && (
+              <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+            )}
+          </div>
+          <h3 class="mt-4 text-lg font-semibold text-gray-900 dark:text-white">
+            {feature.title}
+          </h3>
+          <p class="mt-2 text-gray-600 dark:text-gray-400">
+            {feature.description}
+          </p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

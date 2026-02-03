@@ -1,0 +1,32 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Hero from "../components/Hero.astro";
+import Features from "../components/Features.astro";
+import Downloads from "../components/Downloads.astro";
+import Contributors from "../components/Contributors.astro";
+import Footer from "../components/Footer.astro";
+import { getLatestRelease, getContributors, parseDownloads, formatDate } from "../lib/github";
+import { marked } from "marked";
+
+// Fetch data at build time
+const release = await getLatestRelease();
+const contributors = await getContributors(20);
+
+const version = release?.tag_name;
+const releaseDate = release?.published_at ? formatDate(release.published_at) : undefined;
+const downloads = release?.assets ? parseDownloads(release.assets) : undefined;
+const changelog = release?.body ? await marked(release.body) : undefined;
+const releaseUrl = release?.html_url;
+---
+
+<Layout title="DDEV Manager - A Beautiful GUI for DDEV">
+  <Header version={version} />
+  <main>
+    <Hero version={version} releaseDate={releaseDate} downloads={downloads} />
+    <Features />
+    <Downloads version={version} downloads={downloads} changelog={changelog} releaseUrl={releaseUrl} />
+    <Contributors contributors={contributors} />
+  </main>
+  <Footer />
+</Layout>

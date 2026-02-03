@@ -69,37 +69,39 @@ const base = import.meta.env.BASE_URL;
         <p id="platform-info" class="mt-4 text-sm text-gray-500 dark:text-gray-300"></p>
       </div>
 
-      <!-- Screenshot -->
-      <div class="relative">
-        <div class="relative rounded-xl shadow-2xl ring-1 ring-gray-900/10 dark:ring-white/10">
-          <!-- Dark mode screenshot (visible in dark mode) -->
-          <picture class="hidden dark:block">
-            <source srcset={`${base}images/screenshot-dark.webp`} type="image/webp" />
-            <img
-              src={`${base}images/screenshot-dark.png`}
-              alt="DDEV Manager screenshot"
-              width="1400"
-              height="857"
-              class="w-full rounded-xl"
-              loading="eager"
-              decoding="async"
-              fetchpriority="high"
-            />
-          </picture>
-          <!-- Light mode screenshot (visible in light mode) -->
-          <picture class="block dark:hidden">
-            <source srcset={`${base}images/screenshot-light.webp`} type="image/webp" />
-            <img
-              src={`${base}images/screenshot-light.png`}
-              alt="DDEV Manager screenshot"
-              width="1400"
-              height="857"
-              class="w-full rounded-xl"
-              loading="eager"
-              decoding="async"
-              fetchpriority="high"
-            />
-          </picture>
+      <!-- Screenshot with 3D perspective -->
+      <div class="relative hero-perspective">
+        <div class="hero-screenshot">
+          <div class="relative rounded-xl shadow-2xl ring-1 ring-gray-900/10 dark:ring-white/10">
+            <!-- Dark mode screenshot (visible in dark mode) -->
+            <picture class="hidden dark:block">
+              <source srcset={`${base}images/screenshot-dark.webp`} type="image/webp" />
+              <img
+                src={`${base}images/screenshot-dark.png`}
+                alt="DDEV Manager screenshot"
+                width="1400"
+                height="857"
+                class="w-full rounded-xl"
+                loading="eager"
+                decoding="async"
+                fetchpriority="high"
+              />
+            </picture>
+            <!-- Light mode screenshot (visible in light mode) -->
+            <picture class="block dark:hidden">
+              <source srcset={`${base}images/screenshot-light.webp`} type="image/webp" />
+              <img
+                src={`${base}images/screenshot-light.png`}
+                alt="DDEV Manager screenshot"
+                width="1400"
+                height="857"
+                class="w-full rounded-xl"
+                loading="eager"
+                decoding="async"
+                fetchpriority="high"
+              />
+            </picture>
+          </div>
         </div>
         <!-- Decorative elements -->
         <div class="absolute -bottom-4 -left-4 -z-10 h-72 w-72 rounded-full bg-primary-400/20 blur-3xl"></div>
@@ -108,6 +110,45 @@ const base = import.meta.env.BASE_URL;
     </div>
   </div>
 </section>
+
+<style>
+  .hero-perspective {
+    perspective: 1000px;
+  }
+
+  .hero-screenshot {
+    transform-style: preserve-3d;
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .hero-screenshot > div {
+    transition: transform 0.4s ease-out;
+  }
+
+  .hero-screenshot:hover > div {
+    transform: scale(1.08);
+  }
+
+  .hero-screenshot:hover {
+    animation-play-state: paused;
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: rotateX(8deg) rotateY(-8deg) translateY(0);
+    }
+    50% {
+      transform: rotateX(8deg) rotateY(-8deg) translateY(-15px);
+    }
+  }
+
+  /* Reduce motion for users who prefer it */
+  @media (prefers-reduced-motion: reduce) {
+    .hero-screenshot {
+      animation: none;
+    }
+  }
+</style>
 
 <script>
   // Detect platform and show appropriate message

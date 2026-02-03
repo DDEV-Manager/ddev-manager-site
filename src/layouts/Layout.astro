@@ -18,6 +18,12 @@ const base = import.meta.env.BASE_URL;
     <meta name="description" content={description} />
     <meta name="theme-color" content="#02a8e2" />
 
+    <!-- Preconnect to external origins -->
+    <link rel="preconnect" href="https://cloud.umami.is" />
+    <link rel="preconnect" href="https://avatars.githubusercontent.com" />
+    <link rel="dns-prefetch" href="https://cloud.umami.is" />
+    <link rel="dns-prefetch" href="https://avatars.githubusercontent.com" />
+
     <!-- Open Graph -->
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />

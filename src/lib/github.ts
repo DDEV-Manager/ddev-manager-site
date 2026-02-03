@@ -101,49 +101,49 @@ export function parseDownloads(assets: ReleaseAsset[]): PlatformDownloads {
 
     if (name.endsWith("_universal.dmg")) {
       downloads.macOS = {
-        label: "macOS (Universal)",
+        label: ".dmg",
         url: asset.browser_download_url,
         filename: asset.name,
         size: asset.size,
       };
     } else if (name.includes("x64-setup.exe") || name.includes("x64_en-us.msi")) {
       downloads.windowsX64 = {
-        label: "Windows x64",
+        label: "x64",
         url: asset.browser_download_url,
         filename: asset.name,
         size: asset.size,
       };
     } else if (name.includes("arm64-setup.exe")) {
       downloads.windowsArm = {
-        label: "Windows ARM64",
+        label: "ARM64",
         url: asset.browser_download_url,
         filename: asset.name,
         size: asset.size,
       };
     } else if (name.includes("amd64.deb")) {
       downloads.linuxX64Deb = {
-        label: "Linux x64 (deb)",
+        label: ".deb",
         url: asset.browser_download_url,
         filename: asset.name,
         size: asset.size,
       };
     } else if (name.includes("amd64.appimage")) {
       downloads.linuxX64AppImage = {
-        label: "Linux x64 (AppImage)",
+        label: "AppImage",
         url: asset.browser_download_url,
         filename: asset.name,
         size: asset.size,
       };
     } else if (name.includes("arm64.deb")) {
       downloads.linuxArmDeb = {
-        label: "Linux ARM64 (deb)",
+        label: ".deb",
         url: asset.browser_download_url,
         filename: asset.name,
         size: asset.size,
       };
     } else if (name.includes("arm64.appimage")) {
       downloads.linuxArmAppImage = {
-        label: "Linux ARM64 (AppImage)",
+        label: "AppImage",
         url: asset.browser_download_url,
         filename: asset.name,
         size: asset.size,

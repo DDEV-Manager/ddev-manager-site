@@ -94,6 +94,11 @@ export function parseDownloads(assets: ReleaseAsset[]): PlatformDownloads {
   for (const asset of assets) {
     const name = asset.name.toLowerCase();
 
+    // Skip signature files
+    if (name.endsWith(".sig")) {
+      continue;
+    }
+
     if (name.endsWith("_universal.dmg")) {
       downloads.macOS = {
         label: "macOS (Universal)",

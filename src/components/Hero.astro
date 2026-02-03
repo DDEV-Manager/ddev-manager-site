@@ -121,11 +121,15 @@ const base = import.meta.env.BASE_URL;
     animation: float 6s ease-in-out infinite;
   }
 
-  .hero-screenshot > div {
+  .hero-screenshot > div, .hero-screenshot > div img {
     transition: transform 0.4s ease-out;
   }
 
   .hero-screenshot:hover > div {
+    transform: scale(1.08);
+  }
+
+  .hero-screenshot:hover > div img {
     transform: scale(1.08);
   }
 
